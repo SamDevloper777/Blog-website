@@ -6,12 +6,16 @@ include "config/function.php";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>Filter</title>
 </head>
 <script src="https://cdn.tailwindcss.com"></script>
 <body>
     <?php include_once "includes/header.php"; ?>
-    <?php include_once "includes/hero.php"; ?>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
     
     <div class="flex flex-1 px-[6%] gap-3">
         <div class="w-3/12">
@@ -23,7 +27,7 @@ include "config/function.php";
                 $cat_id = $cat['cat_id'];
                 $countCat = countData("blog_posts","category_id='$cat_id'");?>
 
-                <a class="text-lg capitalize w-[80%] bg-slate-100 px-3 py-2 rounded hover:bg-slate-800 hover:text-slate-100 transition-all duration-100 flex flex-1 justify-between" href="filter.php?cat=<?=$cat['cat_slug'];?> ">
+                <a class="text-lg capitalize w-[80%] bg-slate-100 px-3 py-2 rounded hover:bg-slate-800 hover:text-slate-100 transition-all duration-100 flex flex-1 justify-between" href="filter.php?cat=<?=$cat['cat_slug'];?>">
 
                 <span><?=$cat['cat_title'];?></span>
                 <span class="text-slate-600"><?=($countCat>0) ? "($countCat)": null;?></span>
@@ -32,9 +36,14 @@ include "config/function.php";
             </div>
         </div>
         <div class="w-9/12 flex flex-col mb-10 gap-3">
-            <h2 class="text-2xl font-black text-slate-700 mb-3 border-b-2">Recent post(4)</h2>
+            <h2 class="text-2xl font-black text-slate-700 mb-3 border-b-2 capitalize"><?=(isset($_GET['cat']))?$_GET['cat']:"Recent"?> post</h2>
             <?php
-            $callingPost=callingData("blog_posts join authors on blog_posts.author_id= authors.author_id join categories on blog_posts.category_id = categories.cat_id");
+            if(isset($_GET['cat'])):
+                $cat_slug=$_GET['cat'];
+                $callingPost=callingData("blog_posts join authors on blog_posts.author_id= authors.author_id join categories on blog_posts.category_id = categories.cat_id where categories.cat_slug = '$cat_slug'");
+            else:
+                $callingPost=callingData("blog_posts join authors on blog_posts.author_id= authors.author_id join categories on blog_posts.category_id = categories.cat_id");
+            endif;
             foreach($callingPost as $post):
             ?>
             <a href="view.php?post_slug=<?=$post['slug'];?>">

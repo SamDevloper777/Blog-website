@@ -26,10 +26,6 @@ include_once "../config/function.php";
                     <input type="text" name="cat_title" class="border px-3 py-2 w-full">
                 </div>
                 <div class="mb-3 flex flex-col gap-2">
-                    <label for="">Category Slug</label>
-                    <input type="text" name="cat_slug" class="border px-3 py-2 w-full">
-                </div>
-                <div class="mb-3 flex flex-col gap-2">
                     <label for="">Category description</label>
                     <textarea rows="6" type="text" name="cat_description" class="border px-3 py-2 w-full"></textarea>
                 </div>
@@ -42,7 +38,7 @@ include_once "../config/function.php";
             {
                 $record=[
                     "cat_title"=>$_POST['cat_title'],
-                    "cat_slug"=>$_POST['cat_slug'],
+                    "cat_slug"=>slugify($_POST['cat_slug']),
                     "cat_description"=>$_POST['cat_description'],
                 ]; 
                

@@ -73,6 +73,7 @@ function slugify($string) {
     return $string;
 }
 
+
 function protected_session($name,$redirect_page)
 {
     if(!isset($_SESSION[$name]))
