@@ -49,6 +49,12 @@ if(isset($_POST['login']))
     $count = countData('authors',"author_email='$email' and author_password='$password'");
     if($count > 0)
     {
+        $checkAdmin=countData("authors","author_email='$email' and author_password='$password' and isAdmin=true");
+        if($checkAdmin > 0)
+        {
+            $_SESSION['admin']=$email;
+            redirect('admin/index.php');
+        }
        
         $_SESSION['author']= $email;
         redirect('author/index.php');

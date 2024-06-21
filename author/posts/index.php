@@ -56,7 +56,17 @@ $author = getUserInfo("authors","author_email='$session'");
                     <td class="border p-4"><?=$post['title']?></td>
                     <td class="border p-4"><?=$post['date_of_created']?></td>
                     <td class="border p-4"><?=$post['status']?></td>
-                    <td class="border p-4"></td>
+                    <td class="border p-4">
+                        <?php
+                          if($post['status']=="draft"):
+                        ?>
+                        <a href="?isPublish=1 & post_id=<?=$post['id'];?>" class="bg-green-600 text-white px-2 py-1">Publish</a>
+
+                        <?php else: ?>
+
+                        <a href="?isPublish=0 & post_id=<?=$post['id'];?>" class="bg-red-600 text-white px-2 py-1">UnPublish</a>
+                        <?php endif; ?>
+                    </td>
                 </tr>
                 <?php endforeach;?>
             </tbody>
@@ -67,3 +77,31 @@ $author = getUserInfo("authors","author_email='$session'");
     
 </body>
 </html>
+<?php
+if(isset($_GET['isPublish']))
+{  
+    $post_id=$_GET['post_id'];
+   
+    if($_GET['isPublish']==1)
+    {
+        $currentStatus = 'published'; 
+    }
+    elseif($_GET['isPublish']== 0)
+    {
+        $currentStatus = 'draft';
+    }
+    $queryforupdate=mysqli_query($con,"update blog_posts SET status='$currentStatus' where id='$post_id'"); 
+   
+    if($queryforupdate)
+    {
+        redirect("index.php");
+    }
+    else
+    {
+        message("something went wrong"); 
+    }
+  
+    
+    
+}
+?>

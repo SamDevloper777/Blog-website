@@ -46,14 +46,26 @@ function callingData($table,$cond=null)
     return $data;
 }
 //counting data
-function countData($table,$cond)
+function countData($table,$cond=null)
 {
     global $con;
-    $sql="select * from $table where $cond";
+    if($cond==null)
+    {
+        $sql="select * from $table";
+    }
+    else{
+        $sql="select * from $table where $cond ";
+    }
+    
     $run=mysqli_query($con,$sql);
     $count=mysqli_num_rows($run);
     return $count;
 }
+
+
+
+
+
 function slugify($string) {
     // Convert string to lowercase
     $string = mb_strtolower($string, 'UTF-8');
@@ -72,6 +84,7 @@ function slugify($string) {
 
     return $string;
 }
+
 
 
 function protected_session($name,$redirect_page)

@@ -1,5 +1,8 @@
 
-<?php include_once "../config/function.php"; ?>
+<?php include_once "../config/function.php";
+
+protected_session("admin","../login.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
